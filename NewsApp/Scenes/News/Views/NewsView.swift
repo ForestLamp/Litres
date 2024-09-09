@@ -17,7 +17,7 @@ struct NewsView: View {
             case .loading:
                 ProgressView()
                     .task {
-                        await fetchArticles()
+                        self.fetchArticles()
                     }
 
             case .success:
@@ -48,7 +48,7 @@ struct NewsView: View {
         }
     }
 
-    private func fetchArticles() async {
-        await newsViewModel.fetchArticles()
+    private func fetchArticles() {
+        newsViewModel.fetchArticles()
     }
 }

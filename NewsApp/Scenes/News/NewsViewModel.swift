@@ -17,14 +17,16 @@ final class NewsViewModel: ObservableObject {
         self.networkService = networkService
     }
 
-    func fetchArticles() async {
+    func fetchArticles() {
         state = .loading
-        do {
-            let newsResponse: NewsDTO = try await networkService.fetchData(from: Endpoint.latestNews)
-            articles = newsResponse.results
-            state = .success
-        } catch {
-            state = .failure("Error: \n\(error.localizedDescription)")
+        Task {
+            do {
+                let newsResponse: NewsDTO = try await networkService.fetchData(from: Endpoint.latestNews)
+                articles = newsResponse.results
+                state = .success
+            } catch {
+                state = .failure("Error: \n\(error.localizedDescription)")
+            }
         }
     }
 }
